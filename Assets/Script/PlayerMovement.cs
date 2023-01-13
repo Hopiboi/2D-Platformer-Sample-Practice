@@ -6,7 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public Rigidbody2D rg2D;
-    
+    public Animator anim;
+
     float jumpPower = 5.4f;
 
 
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     {
      
         rg2D = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
     }
 
@@ -23,13 +25,13 @@ public class PlayerMovement : MonoBehaviour
     {
         float dirX = Input.GetAxis("Horizontal");
         rg2D.velocity = new Vector2 (dirX * 7f, rg2D.velocity.y);
+        anim.SetBool("isWalking",true);
 
         //jump
         if (Input.GetButtonDown("Jump"))
         {
             rg2D.velocity = new Vector2(rg2D.velocity.x, jumpPower);
         }
-
 
     }
 }
