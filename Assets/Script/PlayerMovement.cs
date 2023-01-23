@@ -5,27 +5,34 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public Rigidbody2D rg2D;
-    public Animator anim;
+    private Rigidbody2D rg2D;
+    private Animator anim;
+    private SpriteRenderer sprite;
 
-    float jumpPower = 5.4f;
+    [SerializeField] private float jumpPower = 5.4f;
+    [SerializeField] private float moveSpeed = 7f;
+    private float dirX = 0f;
 
+    private enum MovementState { idle, running, jump, fall }
 
-    // Start is called before the first frame update
     void Start()
     {
-     
         rg2D = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
+        sprite = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void Update()
     {
-        float dirX = Input.GetAxis("Horizontal");
-        rg2D.velocity = new Vector2 (dirX * 7f, rg2D.velocity.y);
-        anim.SetBool("isWalking",true);
+        Movement();
+    }
+
+    //Movement keys 
+    private void Movement()
+    {
+        dirX = Input.GetAxis("Horizontal");
+        rg2D.velocity = new Vector2(dirX * moveSpeed, rg2D.velocity.y);
 
         //jump
         if (Input.GetButtonDown("Jump"))
@@ -33,5 +40,41 @@ public class PlayerMovement : MonoBehaviour
             rg2D.velocity = new Vector2(rg2D.velocity.x, jumpPower);
         }
 
+        AnimationMovement();
+    }
+
+    //Animation code
+    private void AnimationMovement()
+    {
+        MovementState state;
+
+        if (dirX > 0f)
+        {
+            state = MovementState.running;
+            sprite.flipX = false;
+        }
+
+        else if (dirX < 0f)
+        {
+            state = MovementState.running;
+            sprite.flipX = true;
+        }
+
+        else
+        {
+            state = MovementState.idle;
+        }
+
+        if (rg2D.velocity.y > .1f)
+        {
+            state = MovementState.jump;
+        }
+
+        else if (rg2D.velocity.y < -.1f)
+        {
+            state = MovementState.fall;
+        }
+
+        anim.SetInteger("state", (int)state);
     }
 }
