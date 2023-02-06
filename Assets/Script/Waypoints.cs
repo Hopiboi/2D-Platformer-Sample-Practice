@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementPlatform : MonoBehaviour
+public class Waypoints : MonoBehaviour
 {
 
     [SerializeField] private GameObject[] waypoints;
