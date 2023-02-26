@@ -4,10 +4,36 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    [SerializeField] Transform player;
+    [SerializeField] float timeOffSet; // Speed of the camera
+    [SerializeField] Vector3 offSetPos;
 
-    private void Update()
+    [SerializeField] Vector3 boundMin; 
+    [SerializeField] Vector3 boundMax; 
+
+    private void LateUpdate()
     {
-        transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
+        if (player != null)
+        {
+            //Camera Location
+            Vector3 startPos = transform.position;
+            Vector3 targetPos = player.position;
+
+            //placement of the camera
+            targetPos.x += offSetPos.x;
+            targetPos.y += offSetPos.y;
+            targetPos.z += transform.position.z;
+
+            //min and max boundX
+            targetPos.x = Mathf.Clamp(targetPos.x, boundMin.x, boundMax.x);
+
+            //min and max boundY
+            targetPos.y = Mathf.Clamp(targetPos.y, boundMin.y, boundMax.y);
+
+            //moving the camera
+            float t = 1f - Mathf.Pow(1f - timeOffSet, Time.deltaTime * 30);
+            transform.position = Vector3.Lerp(startPos, targetPos, t);
+
+        }
     }
 }
