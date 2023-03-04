@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Collectibles
   - Traps
+  - PowerUp
   layers:
   - Default
   - TransparentFX

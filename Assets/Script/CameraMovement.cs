@@ -8,8 +8,8 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] float timeOffSet; // Speed of the camera
     [SerializeField] Vector3 offSetPos;
 
-    [SerializeField] Vector3 boundMin; 
-    [SerializeField] Vector3 boundMax; 
+    [SerializeField] Vector3 boundMin;
+    [SerializeField] Vector3 boundMax;
 
     private void LateUpdate()
     {
@@ -18,11 +18,11 @@ public class CameraMovement : MonoBehaviour
             //Camera Location
             Vector3 startPos = transform.position;
             Vector3 targetPos = player.position;
-
+                
             //placement of the camera
             targetPos.x += offSetPos.x;
             targetPos.y += offSetPos.y;
-            targetPos.z += transform.position.z;
+            targetPos.z = transform.position.z;
 
             //min and max boundX
             targetPos.x = Mathf.Clamp(targetPos.x, boundMin.x, boundMax.x);
