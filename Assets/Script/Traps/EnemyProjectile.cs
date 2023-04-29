@@ -24,7 +24,7 @@ public class EnemyProjectile : PlayerLife// inheritance
 
     public void ActivateProjectile()
     {
-        lifeTime -= 0;//reset
+        lifeTime = 0;//reset
         gameObject.SetActive(true);
 
 

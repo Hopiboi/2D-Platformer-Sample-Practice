@@ -16,12 +16,6 @@ public class FireTrap : MonoBehaviour
     private bool triggered; // trigger to fire or get triggered
     private bool active; // active time for fire/trap
 
-    private void Update()
-    {
-
-
-    }
-
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -42,13 +36,6 @@ public class FireTrap : MonoBehaviour
                 collision.GetComponent<PlayerLife>().Death();
             }
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-
-        collision.GetComponent<PlayerLife>().Death();
-
     }
 
     private IEnumerator ActivateFireTrap()
